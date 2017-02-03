@@ -1,17 +1,10 @@
 import os
 
-import skimage as sk
-
 import numpy as np
-
-from sklearn import preprocessing
 
 from scipy.ndimage import imread
 
 from scipy.misc import imresize
-import matplotlib.pyplot as plt
-
-import random
 
 
 def load_from_folder(path,folder,batch_size):
@@ -31,8 +24,6 @@ def load_from_folder(path,folder,batch_size):
 
     l = label_dict[folder]
 
-    print 'value of labels before any computation: '+str(l)
-
     filenames = []
 
 
@@ -42,7 +33,6 @@ def load_from_folder(path,folder,batch_size):
     for root, dirs, files in os.walk(path):
         num_examples = num_examples + len(files)
         if len(files) > 1:
-            #filenames.append(files)
             filenames = files
 
     fish_labels = np.ndarray([batch_size, 1])
@@ -61,7 +51,6 @@ def load_from_folder(path,folder,batch_size):
             image = imresize(image,[600,600])
             fish_data[j,:,:,:] = image
             fish_labels[j] = l
-            print l
             j = j + 1
         else:
             return fish_data, fish_labels
@@ -87,6 +76,4 @@ def load_batch(max_ex_per_cat):
         batch_data = np.append(batch_data,x, axis=0)
         batch_labels = np.append(batch_labels,y,axis=0)
     return batch_data, batch_labels
-
-X_train,y_train = load_batch(2)
 
