@@ -8,6 +8,7 @@ from sklearn import preprocessing
 
 from scipy.ndimage import imread
 
+import matplotlib.pyplot as plt
 
 path = 'train/train/'
 
@@ -39,4 +40,13 @@ for i in range(0,len(dirnames)):
         relpath = path+dirnames[i]+'/'+f
         # now read the images and store the labels
 
-        imread(relpath)
+        image = imread(relpath)
+        print image.shape
+
+        '''hmmm.... either pad the images with 0's in order to conform to a single size...(but the images get a bit large afterwards) or
+
+            downsample the images in order to create smaller images of the same size...
+
+            ALSO: consider performing edge detection to extract relevant information from the image
+
+            '''
