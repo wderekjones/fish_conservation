@@ -10,6 +10,7 @@ from scipy.misc import imresize
 import matplotlib.pyplot as plt
 
 from skimage import feature
+from skimage.color import rgb2grey
 
 
 
@@ -39,7 +40,7 @@ def load_from_folder(path,folder,batch_size):
 
 
     fish_labels = l*(np.ones([batch_size, 1]))
-    fish_data = np.zeros([batch_size, 600, 600, 3])
+    fish_data = np.zeros([batch_size, 600, 600,1])
     j = 0
 
 
@@ -51,14 +52,11 @@ def load_from_folder(path,folder,batch_size):
             relpath = path + '/' + file
             image = imread(relpath)
 
-            plt.imshow(image)
-            plt.show()
-
-
             image = imresize(image,[600,600])
-            fish_data[j,:,:,:] = image
-            plt.imshow(fish_data[j,:,:,:])
-            plt.show()
+
+            image = rgb2grey(image)
+
+            fish_data[j,:,:,0] = image
 
             j = j + 1
         else:
@@ -75,7 +73,7 @@ def load_batch(max_ex_per_cat):
 
     '''
 
-    batch_data = np.zeros([0,600,600,3])
+    batch_data = np.zeros([0,600,600,1])
     batch_labels = np.zeros([0,1])
 
     dirs = ['ALB','BET','DOL','LAG','NoF','OTHER','SHARK','YFT']
@@ -101,7 +99,6 @@ def to_categorical(x,num_classes):
 
 def compute_canny(data, sigma):
     for i in range(0,data.shape[0]):
-        for j in range(0,3):
-            data[i,:,:,j] = feature.canny(data[i,:,:,j],sigma=sigma)
+        data[i,:,:,0] = feature.canny(data[i,:,:,0],sigma=sigma)
 
     return data
