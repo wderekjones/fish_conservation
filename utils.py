@@ -26,8 +26,6 @@ def load_from_folder(path,folder,batch_size):
 
     filenames = []
 
-
-
     num_examples = 0
 
     for root, dirs, files in os.walk(path):
@@ -35,8 +33,8 @@ def load_from_folder(path,folder,batch_size):
         if len(files) > 1:
             filenames = files
 
-    fish_labels = np.ndarray([batch_size, 1])
-    fish_data = np.ndarray([batch_size, 600, 600, 3])
+    fish_labels = l*(np.ones([batch_size, 1]))
+    fish_data = np.zeros([batch_size, 600, 600, 3])
     j = 0
 
     for file in filenames:
@@ -50,7 +48,6 @@ def load_from_folder(path,folder,batch_size):
 
             image = imresize(image,[600,600])
             fish_data[j,:,:,:] = image
-            fish_labels[j] = l
             j = j + 1
         else:
             return fish_data, fish_labels
@@ -77,3 +74,17 @@ def load_batch(max_ex_per_cat):
         batch_labels = np.append(batch_labels,y,axis=0)
     return batch_data, batch_labels
 
+
+def to_categorical(x,num_classes):
+    cat_labels=np.zeros([x.shape[0],num_classes])
+
+    # for each example
+    for i in range(0,x.shape[0]):
+        # j should be the value of the label, check this with the value of x[i]
+        val = x[i]
+        print (i,val)
+        for j in range(0,num_classes):
+           if (val == j):
+               print (i,j)
+
+    return cat_labels
