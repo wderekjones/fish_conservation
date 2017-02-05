@@ -82,9 +82,6 @@ def to_categorical(x,num_classes):
     for i in range(0,x.shape[0]):
         # j should be the value of the label, check this with the value of x[i]
         val = x[i]
-        print (i,val)
-        for j in range(0,num_classes):
-           if (val == j):
-               print (i,j)
+        cat_labels[i,int(val)] = 1
 
     return cat_labels
