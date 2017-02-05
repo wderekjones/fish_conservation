@@ -7,7 +7,8 @@ def model1():
     model = Sequential()
     model.add(Convolution2D(nb_filter=10,nb_row=5,nb_col=7,input_shape=(600,600,3),activation='relu'))
     model.add(MaxPooling2D(pool_size=(2,2)))
-    model.add(Convolution2D(nb_filter=10,nb_row=5,nb_col=7,input_shape=(600,600,3),activation='relu'))
+    model.add(Convolution2D(nb_filter=10,nb_row=5,nb_col=7,activation='relu'))
+    model.add(Convolution2D(nb_filter=20,nb_row=5,nb_col=7,activation='relu'))
     model.add(MaxPooling2D(pool_size=(2,2)))
 
     model.add(Flatten())

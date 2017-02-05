@@ -7,6 +7,12 @@ from scipy.ndimage import imread
 from scipy.misc import imresize
 
 
+import matplotlib.pyplot as plt
+
+from skimage import feature
+
+
+
 def load_from_folder(path,folder,batch_size):
 
     '''
@@ -28,26 +34,32 @@ def load_from_folder(path,folder,batch_size):
 
     num_examples = 0
 
-    for root, dirs, files in os.walk(path):
-        num_examples = num_examples + len(files)
-        if len(files) > 1:
-            filenames = files
+
+    filenames = os.listdir(path)
+
 
     fish_labels = l*(np.ones([batch_size, 1]))
     fish_data = np.zeros([batch_size, 600, 600, 3])
     j = 0
 
+
+
     for file in filenames:
-
-
         # now read the images and store the labels
 
         if j < batch_size:
             relpath = path + '/' + file
             image = imread(relpath)
 
+            plt.imshow(image)
+            plt.show()
+
+
             image = imresize(image,[600,600])
             fish_data[j,:,:,:] = image
+            plt.imshow(fish_data[j,:,:,:])
+            plt.show()
+
             j = j + 1
         else:
             return fish_data, fish_labels
@@ -69,7 +81,7 @@ def load_batch(max_ex_per_cat):
     dirs = ['ALB','BET','DOL','LAG','NoF','OTHER','SHARK','YFT']
 
     for d in dirs:
-        x,y = load_from_folder('train/train',d,max_ex_per_cat)
+        x,y = load_from_folder('train',d,max_ex_per_cat)
         batch_data = np.append(batch_data,x, axis=0)
         batch_labels = np.append(batch_labels,y,axis=0)
     return batch_data, batch_labels
@@ -85,3 +97,11 @@ def to_categorical(x,num_classes):
         cat_labels[i,int(val)] = 1
 
     return cat_labels
+
+
+def compute_canny(data, sigma):
+    for i in range(0,data.shape[0]):
+        for j in range(0,3):
+            data[i,:,:,j] = feature.canny(data[i,:,:,j],sigma=sigma)
+
+    return data
