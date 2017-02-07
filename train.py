@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 
 
 
-X, y = load_batch(10)
+X, y = load_batch(50)
 
 y = to_categorical(y,8)
 
