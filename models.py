@@ -56,8 +56,8 @@ def model2():
 def model3():
     model = Sequential()
     model.add(Convolution2D(nb_filter=10,nb_row=5,nb_col=7,input_shape=(600,600,1)))
+    model.add(MaxPooling2D(pool_size=(3,3)))
     model.add(PReLU())
-    model.add(Dropout(0.5))
     model.add(Flatten())
     model.add(Dropout(0.5))
     model.add(Dense(output_dim=10))
