@@ -39,7 +39,7 @@ model_file = open(model_name,mode='w')
 
 checkpointer = ModelCheckpoint(filepath=model_name, monitor='val_loss')
 
-model = model1()
+model = model3()
 
 model.compile(optimizer=Adam(lr=0.0001),loss='categorical_crossentropy',metrics=['accuracy'])
 
