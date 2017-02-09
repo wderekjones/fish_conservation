@@ -41,7 +41,7 @@ checkpointer = ModelCheckpoint(filepath=model_name, monitor='val_loss')
 
 model = model3()
 
-model.compile(optimizer=Adam(lr=0.00001),loss='categorical_crossentropy',metrics=['accuracy'])
+model.compile(optimizer=Adam(lr=0.000001),loss='categorical_crossentropy',metrics=['accuracy'])
 
 model.fit(X,y,batch_size=5,nb_epoch=100,shuffle=True,validation_split=0.2, callbacks=[checkpointer])
 

@@ -2,7 +2,7 @@ from keras.models import Sequential
 
 from keras.layers import Dense, Dropout, Convolution2D, MaxPooling2D,Flatten,Activation
 from keras.layers.advanced_activations import PReLU
-from keras.regularizers import l2
+from keras.regularizers import l1l2, l2, l1
 
 
 def model0():
@@ -56,12 +56,12 @@ def model2():
 
 def model3():
     model = Sequential()
-    model.add(Convolution2D(nb_filter=10,nb_row=5,nb_col=7,input_shape=(600,600,1),W_regularizer=l2(0.01)))
+    model.add(Convolution2D(nb_filter=10,nb_row=5,nb_col=7,input_shape=(600,600,1),W_regularizer=l1l2()))
     model.add(MaxPooling2D(pool_size=(3,3)))
     model.add(PReLU())
     model.add(Flatten())
     model.add(Dropout(0.5))
-    model.add(Dense(output_dim=10,W_regularizer=l2(0.01)))
+    model.add(Dense(output_dim=10,W_regularizer=l1l2()))
     model.add(PReLU())
     model.add(Dropout(0.5))
     model.add(Dense(output_dim=8,activation='softmax'))
