@@ -43,6 +43,6 @@ model = model3()
 
 model.compile(optimizer=Adam(lr=0.0001),loss='categorical_crossentropy',metrics=['accuracy'])
 
-model.fit(X,y,batch_size=10,nb_epoch=100,shuffle=True,validation_split=0.2, callbacks=[checkpointer])
+model.fit(X,y,batch_size=5,nb_epoch=100,shuffle=True,validation_split=0.2, callbacks=[checkpointer])
 
 model_file.close()
